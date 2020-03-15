@@ -1,7 +1,7 @@
 import Vue from 'vue'
+import './plugins/element.js'
 import App from './App.vue'
 import router from './router'
-import './plugins/element.js'
 
 // 导入并全局注册TreeTable--------------------------
 import TreeTable from 'vue-table-with-tree-grid'
