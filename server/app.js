@@ -126,7 +126,7 @@ app.use(function (req, res, next) {
 })
 
 app.listen(8888, () => {
-  console.log('http://localhost:8888')
+  console.log('http://localhost:8888/E-commerce_back')
 })
 
 module.exports = app
