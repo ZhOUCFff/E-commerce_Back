@@ -25,7 +25,7 @@ database.initialize(app, function (err) {
 })
 
 //托管静态资源
-app.use('/E-commerce_back', express.static(__dirname + '/admin'))
+app.use('/htgl', express.static(__dirname + '/admin'))
 
 /**
  *
@@ -126,7 +126,7 @@ app.use(function (req, res, next) {
 })
 
 app.listen(8888, () => {
-  console.log('http://localhost:8888/E-commerce_back')
+  console.log('http://localhost:8888/htgl')
 })
 
 module.exports = app

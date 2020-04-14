@@ -11,6 +11,6 @@ module.exports = {
       }
     }
   },
-  publicPath: process.env.NODE_ENV === 'production' ? '/E-commerce_back' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/htgl' : '/',
   outputDir: __dirname + '/../server/admin'
 }
