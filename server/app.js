@@ -7,6 +7,9 @@ var mount = require('mount-routes')
 
 var app = express()
 
+app.get('/api/private/v1/test', (req, res) => {
+  res.send('ok')
+})
 
 /**
  *
