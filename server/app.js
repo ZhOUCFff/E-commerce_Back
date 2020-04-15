@@ -7,10 +7,6 @@ var mount = require('mount-routes')
 
 var app = express()
 
-app.get('/api/private/v1/test', (req, res) => {
-  res.send('ok')
-})
-
 /**
  *
  * 公共系统初始化
@@ -128,8 +124,8 @@ app.use(function (req, res, next) {
   res.sendResult(null, 404, 'Not Found')
 })
 
-app.listen(8888, () => {
-  console.log('http://localhost:8888/htgl')
+app.listen(3003, () => {
+  console.log('http://localhost:3003/htgl')
 })
 
 module.exports = app
