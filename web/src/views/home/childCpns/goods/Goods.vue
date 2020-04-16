@@ -173,7 +173,7 @@ export default {
     async getCategories() {
       const res = await getCategories()
       if (res.meta.status !== 200) return
-      console.log(res.data);
+      // console.log(res.data);
       this.cateList = res.data
     },
     //获取商品数据列表
@@ -243,8 +243,6 @@ export default {
       this.$refs.editGoodsFormRef.validate(async valid => {
 
         if (!valid) return
-        
-        console.log(this.editGoodsForm.goods_cat);
         
         if(this.editGoodsForm.goods_cat) this.editGoodsForm.goods_cat = this.editGoodsForm.goods_cat.join(',')
         
