@@ -243,9 +243,11 @@ export default {
       this.$refs.editGoodsFormRef.validate(async valid => {
 
         if (!valid) return
-
-        this.editGoodsForm.goods_cat = this.editGoodsForm.goods_cat.join(',')
-
+        
+        console.log(this.editGoodsForm.goods_cat);
+        
+        if(this.editGoodsForm.goods_cat) this.editGoodsForm.goods_cat = this.editGoodsForm.goods_cat.join(',')
+        
         const res = await editGoods(this.goodsId, this.editGoodsForm)
 
         if (res.meta.status !== 200) return this.$msg.error('商品信息编辑失败')
