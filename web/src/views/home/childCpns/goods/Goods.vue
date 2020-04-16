@@ -89,6 +89,14 @@
         <el-form-item label="商品重量" prop="goods_weight">
           <el-input v-model="editGoodsForm.goods_weight" type="number"></el-input>
         </el-form-item>
+        <el-form-item label="商品分类" prop="goods_cat">
+          <el-cascader
+            v-model="editGoodsForm.goods_cat"
+            :options="cateList"
+            :props="cateProps"
+            clearable
+          ></el-cascader>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editGoodsDialogVisible = false">取 消</el-button>
@@ -99,7 +107,7 @@
 </template>
  
 <script>
-import { getGoodsList, deleteGoods, findGoods, editGoods } from 'network/home'
+import { getGoodsList, deleteGoods, findGoods, editGoods, getCategories } from 'network/home'
 import { formatDate } from 'common/utils'
 
 export default {
@@ -143,7 +151,15 @@ export default {
           trigger: 'blur'
         }]
       },
-      goodsId: ''
+      goodsId: '',
+      // 编辑商品对话框级联选择器配置
+      cateProps: {
+        expandTrigger: 'hover',
+        value: 'cat_id',
+        label: 'cat_name',
+        children: 'children'
+      },
+      cateList: []
     }
   },
   filters: {
@@ -153,6 +169,13 @@ export default {
     }
   },
   methods: {
+    // 获取商品列表数据
+    async getCategories() {
+      const res = await getCategories()
+      if (res.meta.status !== 200) return
+      console.log(res.data);
+      this.cateList = res.data
+    },
     //获取商品数据列表
     async getGoodsList() {
       const res = await getGoodsList(this.goodsListParams)
@@ -201,6 +224,7 @@ export default {
     },
     //编辑商品
     async editGoodsClick(goods) {
+      this.getCategories()
       this.goodsId = goods.goods_id
       const res = await findGoods(this.goodsId)
       if (res.meta.status !== 200) return
@@ -219,6 +243,9 @@ export default {
       this.$refs.editGoodsFormRef.validate(async valid => {
 
         if (!valid) return
+
+        this.editGoodsForm.goods_cat = this.editGoodsForm.goods_cat.join(',')
+
         const res = await editGoods(this.goodsId, this.editGoodsForm)
 
         if (res.meta.status !== 200) return this.$msg.error('商品信息编辑失败')

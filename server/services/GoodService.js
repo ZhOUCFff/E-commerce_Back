@@ -68,18 +68,21 @@ function generateGoodInfo(params) {
 		if(isNaN(num) || num < 0) return reject("商品数量不正确");
 		info["goods_number"] = num;
 
-		if(!params.goods_cat) return reject("商品没有设置所属分类");
-		var cats = params.goods_cat.split(',');
-		if(cats.length > 0) {
-			info["cat_one_id"] = cats[0];
-		}
-		if(cats.length > 1) {
-			info["cat_two_id"] = cats[1];
-		}
-		if(cats.length > 2) {
-			info["cat_three_id"] = cats[2];
-			info["cat_id"] = cats[2];
-		}
+		// if(!params.goods_cat) return reject("商品没有设置所属分类");
+		if(params.goods_cat) {
+      if(typeof params.goods_cat !== 'string') return reject("商品分类参数格式不正确");
+      var cats = params.goods_cat.split(',');
+      if(cats.length > 0) {
+        info["cat_one_id"] = cats[0];
+      }
+      if(cats.length > 1) {
+        info["cat_two_id"] = cats[1];
+      }
+      if(cats.length > 2) {
+        info["cat_three_id"] = cats[2];
+        info["cat_id"] = cats[2];
+      }
+    }
 		
 
 		if(params.goods_weight) {
