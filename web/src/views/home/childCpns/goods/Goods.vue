@@ -95,6 +95,7 @@
             :options="cateList"
             :props="cateProps"
             clearable
+            size="mini"
           ></el-cascader>
         </el-form-item>
       </el-form>
@@ -127,7 +128,10 @@ export default {
       //编辑商品对话框显示隐藏
       editGoodsDialogVisible: false,
       //编辑商品表单数据
-      editGoodsForm: {},
+      editGoodsForm: {
+        // goods_cat: [1, 3, 7],
+        // goods_cat: []
+      },
       //编辑商品表单规则
       editGoodsRules: {
         goods_name: [{
@@ -224,7 +228,9 @@ export default {
     },
     //编辑商品
     async editGoodsClick(goods) {
+
       this.getCategories()
+
       this.goodsId = goods.goods_id
       const res = await findGoods(this.goodsId)
       if (res.meta.status !== 200) return
@@ -233,9 +239,12 @@ export default {
         goods_price: res.data.goods_price,
         goods_number: res.data.goods_number,
         goods_weight: res.data.goods_weight,
-        cat_id: res.data.cat_id
+        cat_id: res.data.cat_id,
+        goods_cat: res.data.goods_cat.split(',').map(Number)
       }
+
       this.editGoodsForm = editGoodsData
+
       this.editGoodsDialogVisible = true
     },
     // 监听编辑商品确定按钮
@@ -243,12 +252,14 @@ export default {
       this.$refs.editGoodsFormRef.validate(async valid => {
 
         if (!valid) return
+
+        if (!this.editGoodsForm.goods_cat || this.editGoodsForm.goods_cat.length < 3) return this.$msg.error('请选择商品分类')
         
-        if(this.editGoodsForm.goods_cat) this.editGoodsForm.goods_cat = this.editGoodsForm.goods_cat.join(',')
-        
+        this.editGoodsForm.goods_cat = this.editGoodsForm.goods_cat.join(',')
+
         const res = await editGoods(this.goodsId, this.editGoodsForm)
 
-        if (res.meta.status !== 200) return this.$msg.error('商品信息编辑失败')
+        if (res.meta.status !== 200) return this.$msg.error(res.msg || '商品信息编辑成功')
         this.$msg.success('商品信息编辑成功')
         this.getGoodsList()
         this.editGoodsDialogVisible = false

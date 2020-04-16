@@ -68,7 +68,6 @@ function generateGoodInfo(params) {
 		if(isNaN(num) || num < 0) return reject("商品数量不正确");
 		info["goods_number"] = num;
 
-		// if(!params.goods_cat) return reject("商品没有设置所属分类");
 		if(params.goods_cat) {
       if(typeof params.goods_cat !== 'string') return reject("商品分类参数格式不正确");
       var cats = params.goods_cat.split(',');
