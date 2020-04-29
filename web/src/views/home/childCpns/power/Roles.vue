@@ -115,7 +115,7 @@
 
     <!-- 编辑角色对话框 -->
     <el-dialog
-      title="编辑角色信息"
+      title="编辑角色"
       :visible.sync="editRoledialogVisible"
       width="50%"
       @closed="resetFields"
@@ -131,6 +131,26 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="editRoledialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editRole">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 添加角色对话框 -->
+    <el-dialog
+      title="添加角色"
+      :visible.sync="addRoledialogVisible"
+      width="50%"
+      @closed="resetFields"
+    >
+      <el-form :model="addRoleForm" :rules="addRoleRules" ref="editRoleRuleForm" label-width="80px">
+        <el-form-item label="角色名称" prop="roleName">
+          <el-input v-model="addRoleForm.roleName"></el-input>
+        </el-form-item>
+        <el-form-item label="角色描述" prop="roleDesc">
+          <el-input v-model="addRoleForm.roleDesc"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addRoledialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addRole">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -179,8 +199,8 @@ export default {
           trigger: 'blur'
         }],
         roleDesc: [{
-          max: 15,
-          message: '长度不能超过16个字符',
+          max: 30,
+          message: '长度不能超过30个字符',
           trigger: 'blur'
         }]
       },
@@ -200,8 +220,8 @@ export default {
           trigger: 'blur'
         }],
         roleDesc: [{
-          max: 15,
-          message: '长度不能超过16个字符',
+          max: 30,
+          message: '长度不能超过30个字符',
           trigger: 'blur'
         }]
       },
@@ -284,13 +304,12 @@ export default {
       this.rightDialogVisible = false
     },
     // 添加角色-------------------------------------------------------
-    async addRoleClick(role) {
-      this.roleId = role.id
-      const res = await findRole(this.roleId)
+    async addRoleClick() {
       this.addRoledialogVisible = true
     },
+
     //点击确定，添加角色
-    addRole() {
+    async addRole() {
       this.$refs.addRoleRuleForm.validate(async valid => {
         if (!valid) return
         const res = await addRole(this.addRoleForm)

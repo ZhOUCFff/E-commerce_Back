@@ -103,7 +103,8 @@ router.put("/:id",
       {
         "id": req.params.id,
         "mobile": req.body.mobile,
-        "email": req.body.email
+        "email": req.body.email,
+        // "password": req.body.password
       },
       function (err, manager) {
         if (err) return res.sendResult(null, 400, err);

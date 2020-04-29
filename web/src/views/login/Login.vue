@@ -19,7 +19,12 @@
         </el-form-item>
         <el-form-item prop="password">
           <!-- 密码 -->
-          <el-input v-model="LoginForm.password" prefix-icon="el-icon-lock" type="password"></el-input>
+          <el-input
+            @keyup.enter.native="enterLogin"
+            v-model="LoginForm.password"
+            prefix-icon="el-icon-lock"
+            type="password"
+          ></el-input>
         </el-form-item>
         <el-form-item class="btns">
           <el-button type="primary" @click="login">登陆</el-button>
@@ -52,8 +57,8 @@ export default {
     return {
       //登陆表单的数据绑定对象
       LoginForm: {
-        username: '',
-        password: ''
+        username: 'test',
+        password: '123456'
       },
       //表单验证规则
       LoginRules: {
@@ -98,6 +103,9 @@ export default {
         // 跳转到home
         this.$router.push('/home')
       })
+    },
+    enterLogin() {
+      this.login()
     }
   }
 }

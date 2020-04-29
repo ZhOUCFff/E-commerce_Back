@@ -111,7 +111,8 @@ module.exports.updateManager = function(params,cb) {
 		{
 			"mg_id":params.id,
 			"mg_mobile":params.mobile,
-			"mg_email":params.email
+      "mg_email":params.email,
+      // "mg_pwd":Password.hash(params.password)
 		},
 		function(err,manager) {
 			if(err) return cb(err);
@@ -120,7 +121,8 @@ module.exports.updateManager = function(params,cb) {
 					"username":manager.mg_name,
 					"role_id":manager.role_id,
 					"mobile":manager.mg_mobile,
-					"email":manager.mg_email
+          "email":manager.mg_email,
+          // "password":manager.mg_pwd
 				});
 		}
 	)
